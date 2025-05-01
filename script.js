@@ -17,58 +17,7 @@ function changeColor2(e) {
 divRows.map((row) => {
   row.addEventListener("mousedown", changeColor1);
   row.addEventListener("mouseup", changeColor2);
-  row.addEventListener("click", (e) => {
-    if (e.target.textContent === "CLEAR") {
-      display.textContent = "";
-      number = "";
-      number1 = "";
-      number2 = "";
-      operator = "";
-      console.clear();
-      return;
-    }
-    if (
-      (e.target.textContent === "+" && operator === "") ||
-      (e.target.textContent === "-" && operator === "") ||
-      (e.target.textContent === "/" && operator === "") ||
-      (e.target.textContent === "x" && operator === "")
-    ) {
-      operator = e.target.textContent;
-      number1 = Number(display.textContent);
-      display.textContent = "";
-      number = "";
-      return;
-    }
-    if (
-      (e.target.textContent === "+" && operator !== "") ||
-      (e.target.textContent === "-" && operator !== "") ||
-      (e.target.textContent === "/" && operator !== "") ||
-      (e.target.textContent === "x" && operator !== "")
-    ) {
-      number2 = Number(display.textContent);
-      number = "";
-      popDisplay();
-      number1 = operate(number1, operator, number2);
-      operator = e.target.textContent;
-
-      return;
-    }
-    if (e.target.textContent === "=") {
-      if (operator === "") {
-        return;
-      }
-      number2 = Number(display.textContent);
-      console.log(`number1: ${number1}`);
-      console.log(`number2: ${number2}`);
-      popDisplay();
-      number1 = operate(number1, operator, number2);
-      number = "";
-      operator = "";
-      return;
-    }
-    number += e.target.textContent;
-    display.textContent = number;
-  });
+  row.addEventListener("click", calculate);
 });
 
 //operator functions
@@ -111,3 +60,55 @@ function clearDisplay() {
 }
 
 //get user input; store as variables to use in functions; operate on them when user presses "="
+function calculate(e) {
+  if (e.target.textContent === "CLEAR") {
+    display.textContent = "";
+    number = "";
+    number1 = "";
+    number2 = "";
+    operator = "";
+    console.clear();
+    return;
+  }
+  if (
+    (e.target.textContent === "+" && operator === "") ||
+    (e.target.textContent === "-" && operator === "") ||
+    (e.target.textContent === "/" && operator === "") ||
+    (e.target.textContent === "x" && operator === "")
+  ) {
+    operator = e.target.textContent;
+    number1 = Number(display.textContent);
+    display.textContent = "";
+    number = "";
+    return;
+  }
+  if (
+    (e.target.textContent === "+" && operator !== "") ||
+    (e.target.textContent === "-" && operator !== "") ||
+    (e.target.textContent === "/" && operator !== "") ||
+    (e.target.textContent === "x" && operator !== "")
+  ) {
+    number2 = Number(display.textContent);
+    number = "";
+    popDisplay();
+    number1 = operate(number1, operator, number2);
+    operator = e.target.textContent;
+
+    return;
+  }
+  if (e.target.textContent === "=") {
+    if (operator === "") {
+      return;
+    }
+    number2 = Number(display.textContent);
+    console.log(`number1: ${number1}`);
+    console.log(`number2: ${number2}`);
+    popDisplay();
+    number1 = operate(number1, operator, number2);
+    number = "";
+    operator = "";
+    return;
+  }
+  number += e.target.textContent;
+  display.textContent = number;
+}
