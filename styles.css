@@ -27,4 +27,11 @@
   margin: 0px;
   padding: 0px;
   display: inline-block;
+  text-align: center;
+  align-content: center;
+  font-size: 3em;
+}
+
+#row4 .number:nth-child(1) {
+  font-size: 1.5em;
 }
