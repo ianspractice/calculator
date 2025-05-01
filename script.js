@@ -9,10 +9,10 @@ let operator = "";
 display.textContent = 0;
 //change background colors
 function changeColor1(e) {
-  e.target.style.backgroundColor = "purple";
+  e.target.style.backgroundColor = "rgb(95, 34, 126)";
 }
 function changeColor2(e) {
-  e.target.style.backgroundColor = "pink";
+  e.target.style.backgroundColor = "rgb(254, 184, 213)";
 }
 
 //operator functions
@@ -91,7 +91,7 @@ function calculate(e) {
       number1 = 0;
       number = "";
       operator = "";
-      display.textContent = "nope";
+      display.textContent = "no dividing by 0!";
       return;
     } else {
       number = "";
@@ -110,7 +110,7 @@ function calculate(e) {
       number1 = 0;
       number = "";
       operator = "";
-      display.textContent = "nope";
+      display.textContent = "no dividing by 0!";
       return;
     } else {
       console.log(`number1: ${number1}`);
