@@ -2,6 +2,8 @@ const buttons = Array.from(document.querySelectorAll("button"));
 const display = document.querySelector("#display");
 const divRows = Array.from(document.querySelectorAll(".row"));
 
+let number = "";
+let number1 = "";
 //change background colors
 function changeColor1(e) {
   e.target.style.backgroundColor = "purple";
@@ -14,7 +16,20 @@ divRows.map((row) => {
   row.addEventListener("mousedown", changeColor1);
   row.addEventListener("mouseup", changeColor2);
   row.addEventListener("click", (e) => {
-    console.log(e.target.textContent);
+    if (e.target.textContent === "CLEAR") {
+      display.textContent = "";
+      number = "";
+      return;
+    }
+    if (e.target.textContent === "+") {
+      number1 = display.textContent;
+      console.log(`number1: ${number1}`);
+      return;
+    }
+    number += e.target.textContent;
+    console.log(`number: ${number}`);
+    console.log(`number1: ${number1}`);
+    popDisplay(number);
   });
 });
 
@@ -50,4 +65,8 @@ function operate(a, op, b) {
 function popDisplay(input) {
   display.textContent = input;
 }
+function clearDisplay() {
+  display.textContent = "";
+}
+
 //get user input; store as variables to use in functions; operate on them when user presses "="
