@@ -6,6 +6,7 @@ let number = "";
 let number1 = "";
 let number2 = "";
 let operator = "";
+display.textContent = 0;
 //change background colors
 function changeColor1(e) {
   e.target.style.backgroundColor = "purple";
@@ -13,15 +14,12 @@ function changeColor1(e) {
 function changeColor2(e) {
   e.target.style.backgroundColor = "pink";
 }
-//change buttons colors when clicked
-divRows.map((row) => {
-  row.addEventListener("mousedown", changeColor1);
-  row.addEventListener("mouseup", changeColor2);
-  row.addEventListener("click", calculate);
-});
 
 //operator functions
 function add(a, b) {
+  if (!a) {
+    return 0 + b;
+  }
   return a + b;
 }
 function subtract(a, b) {
@@ -62,7 +60,7 @@ function clearDisplay() {
 //get user input; store as variables to use in functions; operate on them when user presses "="
 function calculate(e) {
   if (e.target.textContent === "CLEAR") {
-    display.textContent = "";
+    display.textContent = 0;
     number = "";
     number1 = "";
     number2 = "";
@@ -89,26 +87,48 @@ function calculate(e) {
     (e.target.textContent === "x" && operator !== "")
   ) {
     number2 = Number(display.textContent);
-    number = "";
-    popDisplay();
-    number1 = operate(number1, operator, number2);
-    operator = e.target.textContent;
-
-    return;
+    if (number2 === 0 && operator === "/") {
+      number1 = 0;
+      number = "";
+      operator = "";
+      display.textContent = "nope";
+      return;
+    } else {
+      number = "";
+      popDisplay();
+      number1 = operate(number1, operator, number2);
+      operator = e.target.textContent;
+      return;
+    }
   }
   if (e.target.textContent === "=") {
     if (operator === "") {
       return;
     }
     number2 = Number(display.textContent);
-    console.log(`number1: ${number1}`);
-    console.log(`number2: ${number2}`);
-    popDisplay();
-    number1 = operate(number1, operator, number2);
-    number = "";
-    operator = "";
-    return;
+    if (number2 === 0 && operator === "/") {
+      number1 = 0;
+      number = "";
+      operator = "";
+      display.textContent = "nope";
+      return;
+    } else {
+      console.log(`number1: ${number1}`);
+      console.log(`number2: ${number2}`);
+      popDisplay();
+      number1 = operate(number1, operator, number2);
+      number = "";
+      operator = "";
+      return;
+    }
   }
   number += e.target.textContent;
   display.textContent = number;
 }
+
+//change buttons colors when clicked
+divRows.map((row) => {
+  row.addEventListener("mousedown", changeColor1);
+  row.addEventListener("mouseup", changeColor2);
+  row.addEventListener("click", calculate);
+});
