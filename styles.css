@@ -1,11 +1,12 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 #main-container {
-  height: 504px;
-  width: 408px;
+  height: 502px;
+  width: 400px;
   border: 1px solid black;
   margin: 30px auto;
   padding: 0;
@@ -13,14 +14,22 @@
 
 #display {
   height: 100px;
-  width: 406px;
+  width: 100%;
   border: 1px solid black;
 }
 .row {
   height: 100px;
+  width: 100%;
   display: flex;
 }
-.number {
+
+#row4 button:nth-child(1) {
+  font-size: 1.5em;
+}
+
+button {
+  border: 0;
+  background-color: rgb(247, 174, 247);
   height: 100px;
   width: 100px;
   border: 1px solid black;
@@ -30,8 +39,4 @@
   text-align: center;
   align-content: center;
   font-size: 3em;
-}
-
-#row4 .number:nth-child(1) {
-  font-size: 1.5em;
 }
