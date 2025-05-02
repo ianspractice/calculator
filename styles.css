@@ -5,7 +5,7 @@
 }
 
 #main-container {
-  height: 500px;
+  height: 600px;
   width: 400px;
   margin: 30px auto;
   padding: 0;
@@ -21,6 +21,7 @@
   align-content: center;
   text-align: right;
   border-radius: 10px;
+  padding-right: 5px;
 }
 .row {
   height: 100px;
@@ -28,8 +29,9 @@
   display: flex;
 }
 
-#row4 button:nth-child(1) {
+#row1 button {
   font-size: 1.5em;
+  width: 50%;
 }
 
 button {
@@ -46,4 +48,12 @@ button {
   align-content: center;
   margin: 0 auto;
   font-size: 3em;
+}
+
+.operator {
+  background-color: rgb(102, 102, 244);
+}
+
+.equal {
+  background-color: rgb(138, 43, 226);
 }

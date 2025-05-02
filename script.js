@@ -1,6 +1,9 @@
 const buttons = Array.from(document.querySelectorAll("button"));
 const display = document.querySelector("#display");
 const divRows = Array.from(document.querySelectorAll(".row"));
+const numberBtns = Array.from(document.querySelectorAll(".number"));
+const opBtns = Array.from(document.querySelectorAll(".operator"));
+const equalBtn = document.querySelector(".equal");
 
 let number = "";
 let number1 = "";
@@ -8,11 +11,23 @@ let number2 = "";
 let operator = "";
 display.textContent = 0;
 //change background colors
-function changeColor1(e) {
+function changeNumColor1(e) {
   e.target.style.backgroundColor = "rgb(95, 34, 126)";
 }
-function changeColor2(e) {
+function changeNumColor2(e) {
   e.target.style.backgroundColor = "rgb(254, 184, 213)";
+}
+function changeOpColor1(e) {
+  e.target.style.backgroundColor = "rgb(10, 10, 194)";
+}
+function changeOpColor2(e) {
+  e.target.style.backgroundColor = "rgb(102, 102, 244)";
+}
+function changeEqualColor1(e) {
+  e.target.style.backgroundColor = "rgb(62, 6, 114)";
+}
+function changeEqualColor2(e) {
+  e.target.style.backgroundColor = "rgb(138, 43, 226)";
 }
 
 //operator functions
@@ -59,7 +74,7 @@ function clearDisplay() {
 
 //get user input; store as variables to use in functions; operate on them when user presses "="
 function calculate(e) {
-  if (e.target.textContent === "CLEAR") {
+  if (e.target.textContent === "CLEAR ALL") {
     display.textContent = 0;
     number = "";
     number1 = "";
@@ -126,9 +141,21 @@ function calculate(e) {
   display.textContent = number;
 }
 
-//change buttons colors when clicked
 divRows.map((row) => {
-  row.addEventListener("mousedown", changeColor1);
-  row.addEventListener("mouseup", changeColor2);
   row.addEventListener("click", calculate);
 });
+
+//change number buttons' colors when clicked
+numberBtns.map((row) => {
+  row.addEventListener("mousedown", changeNumColor1);
+  row.addEventListener("mouseup", changeNumColor2);
+});
+
+//change operator buttons' colors when clicked
+opBtns.map((row) => {
+  row.addEventListener("mousedown", changeOpColor1);
+  row.addEventListener("mouseup", changeOpColor2);
+});
+
+equalBtn.addEventListener("mousedown", changeEqualColor1);
+equalBtn.addEventListener("mouseup", changeEqualColor2);
