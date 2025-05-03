@@ -147,11 +147,11 @@ function calculate(e) {
     decimal.toggleAttribute("disabled");
   }
   if (target === "DELETE") {
-    if (number.length - 1 === ".") {
-      decimal.removeAttribute("disabled");
-    }
     number = number.slice(0, number.length - 1);
     display.textContent = number;
+    if (!number.includes(".")) {
+      decimal.removeAttribute("disabled");
+    }
     return;
   }
   number += target;
