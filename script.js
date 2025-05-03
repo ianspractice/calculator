@@ -71,7 +71,7 @@ function operate(a, op, b) {
 }
 //create function to populate "display"
 function popDisplay() {
-  display.textContent = operate(number1, operator, number2);
+  display.textContent = operate(number1, operator, number2).toFixed(10) * 1;
 }
 function clearDisplay() {
   display.textContent = 0;
@@ -115,6 +115,8 @@ function calculate(e) {
       return;
     } else {
       number = "";
+      console.log(`number1: ${number1}`);
+      console.log(`number2: ${number2}`);
       popDisplay();
       number1 = operate(number1, operator, number2);
       operator = target;
@@ -188,3 +190,11 @@ equalBtn.addEventListener("mouseup", changeEqualColor2);
 
 decimal.addEventListener("mousedown", changeNumColor1);
 decimal.addEventListener("mouseup", changeNumColor2);
+
+const string1 = 23.23;
+const string2 = 23;
+const strNum = string1 + string2;
+console.log(`strNum: ${strNum}`);
+const fixedStr = strNum.toFixed(string1.toString().length);
+console.log(string1.length);
+console.log(`fixedStr: ${fixedStr}`);
