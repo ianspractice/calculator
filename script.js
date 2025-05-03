@@ -3,7 +3,12 @@ const display = document.querySelector("#display");
 const divRows = Array.from(document.querySelectorAll(".row"));
 const numberBtns = Array.from(document.querySelectorAll(".number"));
 const opBtns = Array.from(document.querySelectorAll(".operator"));
+const opAndNumBtns = Array.from(
+  document.querySelectorAll(".number, .operator, .decimal")
+);
+
 const equalBtn = document.querySelector(".equal");
+const decimal = document.querySelector(".decimal");
 
 let number = "";
 let number1 = "";
@@ -69,37 +74,36 @@ function popDisplay() {
   display.textContent = operate(number1, operator, number2);
 }
 function clearDisplay() {
-  display.textContent = "";
+  display.textContent = 0;
+  number = "";
+  number1 = "";
+  number2 = "";
+  operator = "";
+  console.clear();
+  decimal.removeAttribute("disabled");
+  return;
 }
 
 //get user input; store as variables to use in functions; operate on them when user presses "="
 function calculate(e) {
-  if (e.target.textContent === "CLEAR ALL") {
-    display.textContent = 0;
-    number = "";
-    number1 = "";
-    number2 = "";
-    operator = "";
-    console.clear();
-    return;
+  const target = e.target.textContent;
+  if (target === "CLEAR ALL") {
+    return clearDisplay();
   }
   if (
-    (e.target.textContent === "+" && operator === "") ||
-    (e.target.textContent === "-" && operator === "") ||
-    (e.target.textContent === "/" && operator === "") ||
-    (e.target.textContent === "x" && operator === "")
+    (target === "+" || target === "-" || target === "/" || target === "x") &&
+    operator === ""
   ) {
-    operator = e.target.textContent;
+    operator = target;
     number1 = Number(display.textContent);
     display.textContent = "";
     number = "";
+    decimal.removeAttribute("disabled");
     return;
   }
   if (
-    (e.target.textContent === "+" && operator !== "") ||
-    (e.target.textContent === "-" && operator !== "") ||
-    (e.target.textContent === "/" && operator !== "") ||
-    (e.target.textContent === "x" && operator !== "")
+    (target === "+" || target === "-" || target === "/" || target === "x") &&
+    operator !== ""
   ) {
     number2 = Number(display.textContent);
     if (number2 === 0 && operator === "/") {
@@ -107,16 +111,18 @@ function calculate(e) {
       number = "";
       operator = "";
       display.textContent = "no dividing by 0!";
+      decimal.removeAttribute("disabled");
       return;
     } else {
       number = "";
       popDisplay();
       number1 = operate(number1, operator, number2);
-      operator = e.target.textContent;
+      operator = target;
+      decimal.removeAttribute("disabled");
       return;
     }
   }
-  if (e.target.textContent === "=") {
+  if (target === "=") {
     if (operator === "") {
       return;
     }
@@ -126,36 +132,59 @@ function calculate(e) {
       number = "";
       operator = "";
       display.textContent = "no dividing by 0!";
+      decimal.removeAttribute("disabled");
       return;
     } else {
-      console.log(`number1: ${number1}`);
-      console.log(`number2: ${number2}`);
       popDisplay();
       number1 = operate(number1, operator, number2);
       number = "";
       operator = "";
+      decimal.removeAttribute("disabled");
       return;
     }
   }
-  number += e.target.textContent;
+  if (target === ".") {
+    decimal.toggleAttribute("disabled");
+  }
+  if (target === "DELETE") {
+    if (number.length - 1 === ".") {
+      decimal.removeAttribute("disabled");
+    }
+    number = number.slice(0, number.length - 1);
+    display.textContent = number;
+    return;
+  }
+  number += target;
+
   display.textContent = number;
 }
 
-divRows.map((row) => {
-  row.addEventListener("click", calculate);
+opAndNumBtns.map((btn) => {
+  btn.addEventListener("click", calculate);
 });
 
+// opBtns.map((btn) => {
+//   btn.addEventListener("click", calculate);
+// });
+
+// decimal.addEventListener("click", () => {
+//   decimal.removeEventListener("click", calculate);
+// });
+
 //change number buttons' colors when clicked
-numberBtns.map((row) => {
-  row.addEventListener("mousedown", changeNumColor1);
-  row.addEventListener("mouseup", changeNumColor2);
+numberBtns.map((btn) => {
+  btn.addEventListener("mousedown", changeNumColor1);
+  btn.addEventListener("mouseup", changeNumColor2);
 });
 
 //change operator buttons' colors when clicked
-opBtns.map((row) => {
-  row.addEventListener("mousedown", changeOpColor1);
-  row.addEventListener("mouseup", changeOpColor2);
+opBtns.map((btn) => {
+  btn.addEventListener("mousedown", changeOpColor1);
+  btn.addEventListener("mouseup", changeOpColor2);
 });
 
 equalBtn.addEventListener("mousedown", changeEqualColor1);
 equalBtn.addEventListener("mouseup", changeEqualColor2);
+
+decimal.addEventListener("mousedown", changeNumColor1);
+decimal.addEventListener("mouseup", changeNumColor2);
